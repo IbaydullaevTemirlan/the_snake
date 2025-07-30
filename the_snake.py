@@ -44,12 +44,9 @@ clock = pygame.time.Clock()
 class GameObject:
     """Это базовый класс, он содержит общие атрибуты игровых объектов."""
 
-    # Позиция объекта на игровом поле:
-    position = ((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))
-    # Цвет объекта:
-    body_color = None
-
-    def __init__(self, position, body_color):
+    def __init__(self, position=((SCREEN_WIDTH // 2),
+                                 (SCREEN_HEIGHT // 2)),
+                 body_color=None):
         """Инициализирует базовые атрибуты объекта"""
         self.position = position
         self.body_color = body_color
@@ -65,11 +62,6 @@ class Apple(GameObject):
     """Класс, унаследованный от GameObject,
     описывающий яблоко и действия с ним.
     """
-
-    # Цвет яблока.
-    body_color = (255, 0, 0)
-    # Позиция яблока на игровом поле.
-    position = None
 
     def __init__(self, body_color, position):
         """Задает цвет яблока и вызывает метод"""
