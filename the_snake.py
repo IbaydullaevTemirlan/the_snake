@@ -63,12 +63,13 @@ class Apple(GameObject):
     описывающий яблоко и действия с ним.
     """
 
-    def __init__(self, body_color, position):
+    def __init__(self, body_color=APPLE_COLOR, position=None):
         """Задает цвет яблока и вызывает метод"""
+        if position is None:
+            x = randint(0, GRID_WIDTH - 1) * GRID_SIZE
+            y = randint(0, GRID_HEIGHT - 1) * GRID_SIZE
+            position = (x, y)
         super().__init__(position, body_color)
-        self.body_color = body_color
-        self.randomize_position()
-        self.position = position
 
     def randomize_position(self):
         """Устанавливает начальную позицию яблока."""
