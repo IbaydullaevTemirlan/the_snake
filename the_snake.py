@@ -151,10 +151,12 @@ class Snake(GameObject):
                                % SCREEN_WIDTH, head_coordinate_y)
         elif self.direction == 'UP':
             head_coordinate = (head_coordinate_x, (head_coordinate_y
-                                                   - GRID_SIZE) % SCREEN_HEIGHT)
+                                                   - GRID_SIZE)
+                               % SCREEN_HEIGHT)
         elif self.direction == 'DOWN':
             head_coordinate = (head_coordinate_x, (head_coordinate_y
-                                                   + GRID_SIZE) % SCREEN_HEIGHT)
+                                                   + GRID_SIZE)
+                               % SCREEN_HEIGHT)
         else:
             head_coordinate = (head_coordinate_x, head_coordinate_y)
 
