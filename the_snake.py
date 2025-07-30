@@ -144,17 +144,17 @@ class Snake(GameObject):
         """Обновляет позицию змейки."""
         head_coordinate_x, head_coordinate_y = self.get_head_position()
         if self.direction == 'RIGHT':
-            head_coordinate = ((head_coordinate_x + GRID_SIZE) %
-                               SCREEN_WIDTH, head_coordinate_y)
+            head_coordinate = ((head_coordinate_x + GRID_SIZE)
+                               % SCREEN_WIDTH, head_coordinate_y)
         elif self.direction == 'LEFT':
-            head_coordinate = ((head_coordinate_x - GRID_SIZE) %
-                               SCREEN_WIDTH, head_coordinate_y)
+            head_coordinate = ((head_coordinate_x - GRID_SIZE)
+                               % SCREEN_WIDTH, head_coordinate_y)
         elif self.direction == 'UP':
-            head_coordinate = (head_coordinate_x, (head_coordinate_y -
-                                                   GRID_SIZE) % SCREEN_HEIGHT)
+            head_coordinate = (head_coordinate_x, (head_coordinate_y
+                                                   - GRID_SIZE) % SCREEN_HEIGHT)
         elif self.direction == 'DOWN':
-            head_coordinate = (head_coordinate_x, (head_coordinate_y +
-                                                   GRID_SIZE) % SCREEN_HEIGHT)
+            head_coordinate = (head_coordinate_x, (head_coordinate_y
+                                                   + GRID_SIZE) % SCREEN_HEIGHT)
         else:
             head_coordinate = (head_coordinate_x, head_coordinate_y)
 
@@ -193,21 +193,22 @@ def handle_keys(game_object):
             pygame.quit()
             raise SystemExit
         elif event.type == pygame.KEYDOWN:
-            if (event.key == pygame.K_UP and
-                    game_object.direction != 'DOWN'):
+            if (event.key == pygame.K_UP
+                    and game_object.direction != 'DOWN'):
                 game_object.next_direction = 'UP'
-            elif (event.key == pygame.K_DOWN and
-                  game_object.direction != 'UP'):
+            elif (event.key == pygame.K_DOWN
+                  and game_object.direction != 'UP'):
                 game_object.next_direction = 'DOWN'
-            elif (event.key == pygame.K_LEFT and
-                  game_object.direction != 'RIGHT'):
+            elif (event.key == pygame.K_LEFT
+                  and game_object.direction != 'RIGHT'):
                 game_object.next_direction = 'LEFT'
-            elif (event.key == pygame.K_RIGHT and
-                  game_object.direction != 'LEFT'):
+            elif (event.key == pygame.K_RIGHT
+                  and game_object.direction != 'LEFT'):
                 game_object.next_direction = 'RIGHT'
 
 
 def main():
+    """Происходит обновление состояний объектов."""
     # Инициализация PyGame:
     pygame.init()
     # Тут нужно создать экземпляры классов.
