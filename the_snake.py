@@ -1,5 +1,5 @@
 import random
-from random import choice, randint
+from random import randint
 
 import pygame
 
@@ -51,7 +51,6 @@ class GameObject:
 
     def __init__(self, position, body_color):
         """Инициализирует базовые атрибуты объекта"""
-
         self.position = position
         self.body_color = body_color
 
@@ -59,7 +58,6 @@ class GameObject:
         """Это абстрактный метод, который предназначен
         для переопределения в дочерних классах.
         """
-
         pass
 
 
@@ -112,7 +110,14 @@ class Snake(GameObject):
     body_color = (0, 255, 0)
     last = None
 
-    def __init__(self, length, positions, direction, next_direction, body_color, last):
+    def __init__(self,
+                 length,
+                 positions,
+                 direction,
+                 next_direction,
+                 body_color,
+                 last
+                 ):
         """Инициализирует начальное состояние змейки."""
         super().__init__(positions[0], body_color)
         self.length = length
@@ -139,13 +144,17 @@ class Snake(GameObject):
         """Обновляет позицию змейки."""
         head_coordinate_x, head_coordinate_y = self.get_head_position()
         if self.direction == 'RIGHT':
-            head_coordinate = ((head_coordinate_x + GRID_SIZE) % SCREEN_WIDTH, head_coordinate_y)
+            head_coordinate = ((head_coordinate_x + GRID_SIZE) %
+                               SCREEN_WIDTH, head_coordinate_y)
         elif self.direction == 'LEFT':
-            head_coordinate = ((head_coordinate_x - GRID_SIZE) % SCREEN_WIDTH, head_coordinate_y)
+            head_coordinate = ((head_coordinate_x - GRID_SIZE) %
+                               SCREEN_WIDTH, head_coordinate_y)
         elif self.direction == 'UP':
-            head_coordinate = (head_coordinate_x, (head_coordinate_y - GRID_SIZE) % SCREEN_HEIGHT)
+            head_coordinate = (head_coordinate_x, (head_coordinate_y -
+                                                   GRID_SIZE) % SCREEN_HEIGHT)
         elif self.direction == 'DOWN':
-            head_coordinate = (head_coordinate_x, (head_coordinate_y + GRID_SIZE) % SCREEN_HEIGHT)
+            head_coordinate = (head_coordinate_x, (head_coordinate_y +
+                                                   GRID_SIZE) % SCREEN_HEIGHT)
         else:
             head_coordinate = (head_coordinate_x, head_coordinate_y)
 
@@ -184,13 +193,17 @@ def handle_keys(game_object):
             pygame.quit()
             raise SystemExit
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP and game_object.direction != 'DOWN':
+            if (event.key == pygame.K_UP and
+                    game_object.direction != 'DOWN'):
                 game_object.next_direction = 'UP'
-            elif event.key == pygame.K_DOWN and game_object.direction != 'UP':
+            elif (event.key == pygame.K_DOWN and
+                  game_object.direction != 'UP'):
                 game_object.next_direction = 'DOWN'
-            elif event.key == pygame.K_LEFT and game_object.direction != 'RIGHT':
+            elif (event.key == pygame.K_LEFT and
+                  game_object.direction != 'RIGHT'):
                 game_object.next_direction = 'LEFT'
-            elif event.key == pygame.K_RIGHT and game_object.direction != 'LEFT':
+            elif (event.key == pygame.K_RIGHT and
+                  game_object.direction != 'LEFT'):
                 game_object.next_direction = 'RIGHT'
 
 
