@@ -91,26 +91,16 @@ class Snake(GameObject):
     отрисовкой, а также обрабатывает действия пользователя.
     """
 
-    # Длина змейки.
-    length = 1
-    # Список, содержащий позиции частей тела змейки.
-    positions = [((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))]
-    # Направление движения.
-    direction = 'RIGHT'
-    # Следующее направление движения.
-    next_direction = None
-    # Цвет змейки
-    body_color = (0, 255, 0)
-    last = None
-
     def __init__(self,
-                 length,
-                 positions,
-                 direction,
-                 next_direction,
-                 body_color,
-                 last
+                 length=1,
+                 positions=None,
+                 direction='RIGHT',
+                 next_direction=None,
+                 body_color=SNAKE_COLOR,
+                 last=None
                  ):
+        if positions is None:
+            positions = [(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)]
         """Инициализирует начальное состояние змейки."""
         super().__init__(positions[0], body_color)
         self.length = length
