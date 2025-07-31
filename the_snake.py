@@ -45,7 +45,7 @@ clock = pg.time.Clock()
 class GameObject:
     """Это базовый класс, он содержит общие атрибуты игровых объектов."""
 
-    POSITION = (SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2)
+    POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
 
     def __init__(self, position, body_color=None):
         """Инициализирует базовые атрибуты объекта"""
@@ -95,8 +95,8 @@ class Snake(GameObject):
 
     def __init__(self, body_color=SNAKE_COLOR):
         """Инициализирует начальное состояние змейки."""
-        super().__init__(((SCREEN_WIDTH // 2),
-                          (SCREEN_HEIGHT // 2)), body_color)
+        super().__init__((SCREEN_WIDTH // 2,
+                          SCREEN_HEIGHT // 2), body_color)
         self.length = 1
         self.positions = [self.position]
         self.direction = RIGHT
