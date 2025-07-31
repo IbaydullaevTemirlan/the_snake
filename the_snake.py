@@ -45,7 +45,7 @@ CENTER_POSITION = (
     (SCREEN_HEIGHT // 2) // GRID_SIZE * GRID_SIZE
 )
 
-# Тут опишите все классы игры.
+
 class GameObject:
     """Это базовый класс, он содержит общие атрибуты игровых объектов."""
 
