@@ -47,7 +47,7 @@ class GameObject:
 
     position = ((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))
 
-    def __init__(self, position, body_color=None):
+    def __init__(self, position=None, body_color=None):
         """Инициализирует базовые атрибуты объекта"""
         self.position = position
         self.body_color = body_color
