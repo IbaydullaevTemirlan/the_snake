@@ -2,6 +2,7 @@ import random
 from random import randint
 import pygame as pg
 
+
 # Константы для размеров поля и сетки:
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
 GRID_SIZE = 20
@@ -101,15 +102,16 @@ class Snake(GameObject):
     """
 
     direction_coordinates = {
-            'RIGHT': (1, 0),
-            'LEFT': (-1, 0),
-            'UP': (0, -1),
-            'DOWN': (0, 1),
+        'RIGHT': (1, 0),
+        'LEFT': (-1, 0),
+        'UP': (0, -1),
+        'DOWN': (0, 1),
     }
 
-    def __init__(self, body_color=SNAKE_COLOR, ):
+    def __init__(self, body_color=SNAKE_COLOR):
         """Инициализирует начальное состояние змейки."""
-        super().__init__(((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2)), body_color)
+        super().__init__(((SCREEN_WIDTH // 2),
+                          (SCREEN_HEIGHT // 2)), body_color)
         self.length = 1
         self.positions = [self.position]
         self.direction = self.direction_coordinates['RIGHT']
@@ -152,7 +154,9 @@ class Snake(GameObject):
         """Сбрасывает змейку в начальное состояние."""
         self.length = 1
         self.positions = [self.position]
-        self.direction = random.choice(list(self.direction_coordinates.values()))
+        self.direction = random.choice(list
+                                       (self.direction_coordinates.values())
+                                       )
 
 
 def handle_keys(game_object):
@@ -166,21 +170,21 @@ def handle_keys(game_object):
         elif event.type == pg.KEYDOWN:
             if (event.key == pg.K_UP and game_object.direction
                     != game_object.direction_coordinates['DOWN']):
-                game_object.next_direction\
+                game_object.next_direction \
                     = game_object.direction_coordinates['UP']
             elif (event.key == pg.K_DOWN and game_object.direction
                   != game_object.direction_coordinates['UP']):
-                game_object.next_direction\
+                game_object.next_direction \
                     = game_object.direction_coordinates['DOWN']
             elif (event.key == pg.K_LEFT
                   and game_object.direction
                   != game_object.direction_coordinates['RIGHT']):
-                game_object.next_direction\
+                game_object.next_direction \
                     = game_object.direction_coordinates['LEFT']
             elif (event.key == pg.K_RIGHT
                   and game_object.direction
                   != game_object.direction_coordinates['LEFT']):
-                game_object.next_direction\
+                game_object.next_direction \
                     = game_object.direction_coordinates['RIGHT']
 
 
