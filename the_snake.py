@@ -1,5 +1,4 @@
 import random
-
 from random import randint
 
 import pygame as pg
