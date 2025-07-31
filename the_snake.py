@@ -45,9 +45,9 @@ clock = pg.time.Clock()
 class GameObject:
     """Это базовый класс, он содержит общие атрибуты игровых объектов."""
 
-    position = ((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))
+    POSITION = (SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2)
 
-    def __init__(self, position=None, body_color=None):
+    def __init__(self, position, body_color=None):
         """Инициализирует базовые атрибуты объекта"""
         self.position = position
         self.body_color = body_color
@@ -64,28 +64,19 @@ class Apple(GameObject):
     описывающий яблоко и действия с ним.
     """
 
-    def __init__(self,
+    def __init__(self, position,
                  body_color=APPLE_COLOR,
-                 position=None,
-                 occupied_cell=((SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2),)
                  ):
         """Задает цвет яблока и вызывает метод"""
         super().__init__(position, body_color)
-        if position is None:
-            self.randomize_position(occupied_cell)
-        else:
-            self.position = position
+        self.randomize_position(occupied_cell=(position,))
 
-    def randomize_position(self,
-                           occupied_cell=((SCREEN_WIDTH
-                                           // 2, SCREEN_HEIGHT // 2),)
-                           ):
+    def randomize_position(self, occupied_cell):
         """Устанавливает начальную позицию яблока."""
         while True:
-            location = (randint(0, GRID_WIDTH - 1) * GRID_SIZE,
-                        randint(0, GRID_HEIGHT - 1) * GRID_SIZE)
-            if location not in occupied_cell:
-                self.position = location
+            self.position = (randint(0, GRID_WIDTH - 1) * GRID_SIZE,
+                             randint(0, GRID_HEIGHT - 1) * GRID_SIZE)
+            if self.position not in occupied_cell:
                 break
 
     def draw(self):
@@ -102,20 +93,13 @@ class Snake(GameObject):
     отрисовкой, а также обрабатывает действия пользователя.
     """
 
-    direction_coordinates = {
-        'RIGHT': (1, 0),
-        'LEFT': (-1, 0),
-        'UP': (0, -1),
-        'DOWN': (0, 1),
-    }
-
     def __init__(self, body_color=SNAKE_COLOR):
         """Инициализирует начальное состояние змейки."""
         super().__init__(((SCREEN_WIDTH // 2),
                           (SCREEN_HEIGHT // 2)), body_color)
         self.length = 1
         self.positions = [self.position]
-        self.direction = self.direction_coordinates['RIGHT']
+        self.direction = RIGHT
         self.next_direction = None
         self.body_color = body_color
 
@@ -138,11 +122,7 @@ class Snake(GameObject):
         new_head_coordinate = (second_x, second_y)
         self.positions.insert(0, new_head_coordinate)
         if len(self.positions) > self.length:
-            self.last = self.positions.pop()
-        else:
-            self.last = None
-
-        return new_head_coordinate
+            self.positions.pop()
 
     def draw(self):
         """Отрисовывает змейку на экране, затирая след."""
@@ -155,9 +135,7 @@ class Snake(GameObject):
         """Сбрасывает змейку в начальное состояние."""
         self.length = 1
         self.positions = [self.position]
-        self.direction = (random.choice
-                          (list
-                           (self.direction_coordinates.values())))
+        self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
 
 
 def handle_keys(game_object):
@@ -169,37 +147,33 @@ def handle_keys(game_object):
             pg.quit()
             raise SystemExit
         elif event.type == pg.KEYDOWN:
-            if (event.key == pg.K_UP and game_object.direction
-                    != game_object.direction_coordinates['DOWN']):
+            if (event.key == pg.K_UP
+                    and game_object.direction != DOWN):
                 game_object.next_direction \
-                    = game_object.direction_coordinates['UP']
-            elif (event.key == pg.K_DOWN and game_object.direction
-                  != game_object.direction_coordinates['UP']):
+                    = UP
+            elif (event.key == pg.K_DOWN
+                  and game_object.direction != UP):
                 game_object.next_direction \
-                    = game_object.direction_coordinates['DOWN']
+                    = DOWN
             elif (event.key == pg.K_LEFT
-                  and game_object.direction
-                  != game_object.direction_coordinates['RIGHT']):
+                  and game_object.direction != RIGHT):
                 game_object.next_direction \
-                    = game_object.direction_coordinates['LEFT']
+                    = LEFT
             elif (event.key == pg.K_RIGHT
-                  and game_object.direction
-                  != game_object.direction_coordinates['LEFT']):
+                  and game_object.direction != LEFT):
                 game_object.next_direction \
-                    = game_object.direction_coordinates['RIGHT']
+                    = RIGHT
 
 
 def main():
     """Происходит обновление состояний объектов."""
     pg.init()
     snake = Snake()
-    apple = Apple(body_color=APPLE_COLOR,
-                  position=(randint(0, GRID_WIDTH - 1) * GRID_SIZE,
+    apple = Apple(position=(randint(0, GRID_WIDTH - 1) * GRID_SIZE,
                             randint(0, GRID_HEIGHT - 1) * GRID_SIZE)
                   )
     while True:
         clock.tick(SPEED)
-
         handle_keys(snake)
         snake.update_direction()
         snake.move()
@@ -208,6 +182,7 @@ def main():
             apple.randomize_position(snake.positions)
         elif snake.get_head_position() in snake.positions[1::]:
             snake.reset()
+            apple.randomize_position(snake.positions)
         screen.fill(BOARD_BACKGROUND_COLOR)
         apple.draw()
         snake.draw()
