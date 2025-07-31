@@ -45,11 +45,9 @@ clock = pg.time.Clock()
 class GameObject:
     """Это базовый класс, он содержит общие атрибуты игровых объектов."""
 
-    POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-
-    def __init__(self, position, body_color=None):
+    def __init__(self, body_color=None):
         """Инициализирует базовые атрибуты объекта"""
-        self.position = position
+        self.position = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         self.body_color = body_color
 
     def draw(self):
@@ -64,12 +62,12 @@ class Apple(GameObject):
     описывающий яблоко и действия с ним.
     """
 
-    def __init__(self, position,
+    def __init__(self,
                  body_color=APPLE_COLOR,
                  ):
         """Задает цвет яблока и вызывает метод"""
-        super().__init__(position, body_color)
-        self.randomize_position(occupied_cell=(position,))
+        super().__init__(body_color)
+        self.randomize_position(occupied_cell=(self.position,))
 
     def randomize_position(self, occupied_cell):
         """Устанавливает начальную позицию яблока."""
@@ -95,8 +93,7 @@ class Snake(GameObject):
 
     def __init__(self, body_color=SNAKE_COLOR):
         """Инициализирует начальное состояние змейки."""
-        super().__init__((SCREEN_WIDTH // 2,
-                          SCREEN_HEIGHT // 2), body_color)
+        super().__init__(body_color)
         self.length = 1
         self.positions = [self.position]
         self.direction = RIGHT
@@ -169,9 +166,8 @@ def main():
     """Происходит обновление состояний объектов."""
     pg.init()
     snake = Snake()
-    apple = Apple(position=(randint(0, GRID_WIDTH - 1) * GRID_SIZE,
-                            randint(0, GRID_HEIGHT - 1) * GRID_SIZE)
-                  )
+    apple = Apple()
+
     while True:
         clock.tick(SPEED)
         handle_keys(snake)
