@@ -31,7 +31,8 @@ SNAKE_COLOR = (0, 250, 0)
 SPEED = 10
 
 # Настройка игрового окна:
-screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
+screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0,
+                             32)
 
 # Заголовок окна игрового поля:
 pg.display.set_caption('Змейка')
@@ -154,9 +155,9 @@ class Snake(GameObject):
         """Сбрасывает змейку в начальное состояние."""
         self.length = 1
         self.positions = [self.position]
-        self.direction = random.choice(list
-                                       (self.direction_coordinates.values())
-                                       )
+        self.direction = (random.choice
+                          (list
+                           (self.direction_coordinates.values())))
 
 
 def handle_keys(game_object):
