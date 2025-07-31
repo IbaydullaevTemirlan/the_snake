@@ -40,16 +40,18 @@ pg.display.set_caption('Змейка')
 # Настройка времени:
 clock = pg.time.Clock()
 
+CENTER_POSITION = (
+    (SCREEN_WIDTH // 2) // GRID_SIZE * GRID_SIZE,
+    (SCREEN_HEIGHT // 2) // GRID_SIZE * GRID_SIZE
+)
 
 # Тут опишите все классы игры.
 class GameObject:
     """Это базовый класс, он содержит общие атрибуты игровых объектов."""
 
-    POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-
     def __init__(self, body_color=None):
         """Инициализирует базовые атрибуты объекта"""
-        self.position = self.POSITION
+        self.position = CENTER_POSITION
         self.body_color = body_color
 
     def draw(self):
@@ -66,7 +68,7 @@ class Apple(GameObject):
 
     def __init__(self,
                  body_color=APPLE_COLOR,
-                 occupied_cells=(GameObject.POSITION,)
+                 occupied_cells=(CENTER_POSITION,)
                  ):
         """Задает цвет яблока и вызывает метод"""
         super().__init__(body_color)
