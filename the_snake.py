@@ -45,9 +45,11 @@ clock = pg.time.Clock()
 class GameObject:
     """Это базовый класс, он содержит общие атрибуты игровых объектов."""
 
+    POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+
     def __init__(self, body_color=None):
         """Инициализирует базовые атрибуты объекта"""
-        self.position = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+        self.position = self.POSITION
         self.body_color = body_color
 
     def draw(self):
@@ -64,17 +66,18 @@ class Apple(GameObject):
 
     def __init__(self,
                  body_color=APPLE_COLOR,
+                 occupied_cells=(GameObject.POSITION,)
                  ):
         """Задает цвет яблока и вызывает метод"""
         super().__init__(body_color)
-        self.randomize_position(occupied_cell=(self.position,))
+        self.randomize_position(occupied_cells)
 
-    def randomize_position(self, occupied_cell):
+    def randomize_position(self, occupied_cells):
         """Устанавливает начальную позицию яблока."""
         while True:
             self.position = (randint(0, GRID_WIDTH - 1) * GRID_SIZE,
                              randint(0, GRID_HEIGHT - 1) * GRID_SIZE)
-            if self.position not in occupied_cell:
+            if self.position not in occupied_cells:
                 break
 
     def draw(self):
